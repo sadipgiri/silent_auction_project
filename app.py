@@ -1,6 +1,6 @@
 """
     Silent Auction python app.
-	Author: Matt Collyer (matthewcollyer@bennington.edu)
+	Author: Sadip Giri (sadipgiri@bennington.edu)
 	Date: Oct 7th, 2018
 """
 import json
@@ -13,17 +13,6 @@ app = Flask(__name__)
 @app.route('/')
 def index():
 	return render_template('login.html')
-
-# @app.route('/admin_registration')
-# def admin_registration():
-# 	return render_template('registration.html')
-
-# @app.route('/confirm_admin_registration', methods=['POST'])
-# def confirm_admin_registration():
-# 	username = request.form['user_name']
-# 	paddle_num = request.form['paddle_num']
-# 	registration(username,paddle_num)
-# 	return render_template('confirm_admin_registration.html', name = username, paddle_num = paddle_num)
 
 @app.route('/confirmation', methods=['POST'])
 def confirmation():
@@ -65,7 +54,6 @@ def register():
             return render_template('confirm.html', data = {'username': username, 'pin_number': paddle_number})
     return render_template('register.html')
 
-#bids
 def place_bid(paddle_num,bid_amount,item_id):
 	item_dict = get_item_dict(item_id)
 	if not check_bid_input(bid_amount) and (bid_amount<item_dict['min_bid']):
@@ -125,7 +113,7 @@ def find_index_of_item(items_dict,item_id):
 	for item in items_dict['items']:
 		if item['item_id'] == item_id:
 			return items_dict['items'].index(item)
-#user for login
+
 def get_name(paddle_num):
 	users_dict=get_users_dict()
 	for user in users_dict['users']:
@@ -146,9 +134,6 @@ def get_items_dict():
 	items_json.close()
 	return items_dict
 
-# we need a sleep function to check if the bidsheet displayed needs updating. Probably JS.
-
-#gets information of item
 def get_item_dict(input_id):
 	items_dict=get_items_dict()
 	for item in items_dict['items']:
